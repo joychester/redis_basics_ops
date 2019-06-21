@@ -1,4 +1,3 @@
-
 "use strict";
 
 const redis = require('redis');
@@ -10,6 +9,7 @@ const client = redis.createClient();
 const mykey = "foo";
 const mylist = "mylist";
 const task = "petest" + Math.floor(Math.random()*10000);
+const task_obj = {"mytask": Math.floor(Math.random()*10000)};
 
 const quit = async function() {
   await client.quitAsync();
@@ -24,6 +24,9 @@ const setBasicValue = async function(key, value) {
 };
 
 const lpushToLinkedList = async function(list, task) {
+  if (typeof task === "object") {
+    task = JSON.stringify(task);
+  }
   return await client.lpushAsync(list, task);
 };
 
@@ -61,13 +64,20 @@ const getTaskLength = async function(list) {
 // basic linked list operations
 (async() => {
   try {
-    const task_size = await getTaskLength(mylist);
+    let task_size = await getTaskLength(mylist);
     console.log('task_size: ' + task_size);
-    const task_added = await lpushToLinkedList(mylist, task);
+    let task_added = await lpushToLinkedList(mylist, task);
     console.log('task_added_index: ' + task_added);
-    const current_task = await getCurrentTaskFromLinedList(mylist);
+    let current_task = await getCurrentTaskFromLinedList(mylist);
     console.log('current_task: ' + current_task);
-    const task_popped = await rpopFromLinkedList(mylist);
+    let task_popped = await rpopFromLinkedList(mylist);
+    console.log('task_popped: ' + task_popped);
+    
+    task_added = await lpushToLinkedList(mylist, task_obj);
+    console.log('task_added_index: ' + task_added);
+    current_task = await getCurrentTaskFromLinedList(mylist);
+    console.log('current_task: ' + current_task);
+    task_popped = await rpopFromLinkedList(mylist);
     console.log('task_popped: ' + task_popped);
   }
   finally {
