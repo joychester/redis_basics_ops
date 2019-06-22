@@ -55,7 +55,10 @@ const setTaskToHash = async function(hash, field_name, field_val) {
 };
 
 const getTaskFromHash = async function(hash, field_name) {
-  return await client.hgetAsync(hash, field_name);
+  if (await client.hexists(hash, field_name)) {
+    return await client.hgetAsync(hash, field_name);
+  }
+  return 0;
 };
 
 const getAllFieldNameFromHash = async function(hash) {
