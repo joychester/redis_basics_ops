@@ -17,7 +17,7 @@ const task_obj = {"mytask": Math.floor(Math.random()*10000)};
 
 (async() => {
   try {
-    // basic key-value pair operations
+    //Test_1: basic key-value pair operations
     const status = await setBasicValue(mykey, "bar1234");
     console.log(status);
     if(status === 'OK') {
@@ -27,7 +27,7 @@ const task_obj = {"mytask": Math.floor(Math.random()*10000)};
       console.log(status);
     }
 
-    // basic linked list operations
+    //Test_2: basic linked list operations
     let task_size = await getTaskLength(mylist);
     console.log('task_size: ' + task_size);
     let task_added = await lpushToLinkedList(mylist, task);
