@@ -14,7 +14,9 @@ const check_interval_ms = 5000;
 let workers = ['1.1.1.1', '2.2.2.2', '3.3.3.3'];
 let count = 0;
 
-/*(async() => {
+/* 
+//IIFE (Immediately Invoked Function Expression) pattern
+(async() => {
   try {
     console.log(`Check Server status every ${check_interval_ms} ms...`);
 
@@ -55,6 +57,7 @@ let count = 0;
 })();
 */
 
+// Scheduling mode
 setInterval(async() => {
   try {
     console.log(`Check Server status every ${check_interval_ms} ms...`);
