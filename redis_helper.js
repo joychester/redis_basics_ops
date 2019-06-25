@@ -71,10 +71,14 @@ const getFieldLengthFromHash = async function(hash) {
 
 const delFieldFromHash = async function(hash, field_name) {
   if (await client.hexists(hash, field_name)) {
-    return await client.hdel(hash, field_name);
+    return await client.hdelAsync(hash, field_name);
   }
   return 0;
 };
+
+const getAllFieldsFromHash = async function(hash) {
+    return await client.hgetallAsync(hash);
+}
 
 module.exports = {
     quit: quit,
@@ -91,5 +95,6 @@ module.exports = {
     getAllFieldsNameFromHash: getAllFieldsNameFromHash,
     getAllFieldsValFromHash: getAllFieldsValFromHash,
     getFieldLengthFromHash: getFieldLengthFromHash,
-    delFieldFromHash: delFieldFromHash
+    delFieldFromHash: delFieldFromHash,
+    getAllFieldsFromHash: getAllFieldsFromHash
 }
