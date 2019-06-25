@@ -46,30 +46,30 @@ const delLinkedList = async function(list) {
   return await client.delAsync(list);
 };
 
-const setTaskToHash = async function(hash, field_name, field_val) {
+const setFieldToHash = async function(hash, field_name, field_val) {
   return await client.hsetAsync(hash, field_name, field_val);
 };
 
-const getTaskFromHash = async function(hash, field_name) {
+const getFieldFromHash = async function(hash, field_name) {
   if (await client.hexists(hash, field_name)) {
     return await client.hgetAsync(hash, field_name);
   }
   return 0;
 };
 
-const getAllFieldNameFromHash = async function(hash) {
+const getAllFieldsNameFromHash = async function(hash) {
   return await client.hkeysAsync(hash);
 };
 
-const getAllFieldValFromHash = async function(hash) {
+const getAllFieldsValFromHash = async function(hash) {
   return await client.hvalsAsync(hash);
 };
 
-const getTaskLengthFromHash = async function(hash) {
+const getFieldLengthFromHash = async function(hash) {
   return await client.hlenAsync(hash);
 };
 
-const delTaskFromHash = async function(hash, field_name) {
+const delFieldFromHash = async function(hash, field_name) {
   if (await client.hexists(hash, field_name)) {
     return await client.hdel(hash, field_name);
   }
@@ -86,10 +86,10 @@ module.exports = {
     getTaskLength: getTaskLength,
     isKeyExist: isKeyExist,
     delLinkedList: delLinkedList,
-    setTaskToHash: setTaskToHash,
-    getTaskFromHash: getTaskFromHash,
-    getAllFieldNameFromHash: getAllFieldNameFromHash,
-    getAllFieldValFromHash: getAllFieldValFromHash,
-    getTaskLengthFromHash: getTaskLengthFromHash,
-    delTaskFromHash: delTaskFromHash
+    setFieldToHash: setFieldToHash,
+    getFieldFromHash: getFieldFromHash,
+    getAllFieldsNameFromHash: getAllFieldsNameFromHash,
+    getAllFieldsValFromHash: getAllFieldsValFromHash,
+    getFieldLengthFromHash: getFieldLengthFromHash,
+    delFieldFromHash: delFieldFromHash
 }
