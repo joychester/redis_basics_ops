@@ -12,9 +12,10 @@ const {
 
 const server_status = 'server_status';
 const check_interval_ms = 5000;
+const worker_busy_threshold = 10;
 const task_list = "mylist";
 let workers = ['1.1.1.1', '2.2.2.2', '3.3.3.3'];
-let count = 0;
+let count = 0, busy = 0;
 
 setInterval(async() => {
   try {
@@ -57,9 +58,19 @@ setInterval(async() => {
       console.log(`Avaible worker info : ${worker_selected}`);
 
       // Pop the task from Redis List if there is avaible worker
-      let next_task = await rpopFromLinkedList(task_list);
-      console.log(`going to process next task: ${next_task}`);
+      if(worker_selected !== 'nil') {
+        let next_task = await rpopFromLinkedList(task_list);
+        console.log(`going to process next task: ${next_task}`);
+        busy = 0;
+
       // TO-DO: Send task to worker and get excuted
+      } else {
+        console.log(`all workers are busy currently, will check in next ${check_interval_ms}ms...`);
+        busy++;
+        if (busy > worker_busy_threshold) {
+          console.log("[WARN]: ALL WORKER ARE BUSY FOR QUITE A WHILE, SOMETHING WRONG??");
+        }
+      }
 
     } else {
       console.log(`no task remaining currently, will check in next ${check_interval_ms}ms...`);
