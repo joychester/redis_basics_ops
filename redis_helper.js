@@ -57,6 +57,16 @@ const getFieldFromHash = async function(hash, field_name) {
   return 0;
 };
 
+const setMuFieldsToHash = async function(hash, ...kv_input) {
+    console.log(kv_input);
+    if (kv_input.length%2 === 0) {
+      return await client.hmsetAsync(hash, kv_input);
+    } else {
+        console.log("Save to Redis failed, the key-value pairs provided incorrect...");
+        return 0;
+    }
+}
+
 const getAllFieldsNameFromHash = async function(hash) {
   return await client.hkeysAsync(hash);
 };
@@ -92,6 +102,7 @@ module.exports = {
     delLinkedList: delLinkedList,
     setFieldToHash: setFieldToHash,
     getFieldFromHash: getFieldFromHash,
+    setMuFieldsToHash: setMuFieldsToHash,
     getAllFieldsNameFromHash: getAllFieldsNameFromHash,
     getAllFieldsValFromHash: getAllFieldsValFromHash,
     getFieldLengthFromHash: getFieldLengthFromHash,
