@@ -46,13 +46,13 @@ console.log(xml_file);
             // write the files into test folder
             fs.writeFileSync(`./tmp/${test_name}/test.jmx`, file_to_dump);
             fs.writeFileSync(`./tmp/${test_name}/data.csv`, data_to_dump);
+            
+            // execute the dummy jmeter tests
+            let result = cp.execSync(`~/Tools/apache-jmeter-5.1.1/bin/jmeter -n -t ./tmp/${test_name}/test.jmx -l ./tmp/${test_name}/result.jtl`).toString();
+            console.log(result);
         } catch (err) {
             console.error(err);
         }
     }
     await quit();
-
-    // execute the dummy jmeter tests
-    let result = cp.execSync('~/Tools/apache-jmeter-5.1.1/bin/jmeter -n -t ./tmp/demo/test.jmx -l ./tmp/demo/result.jtl').toString();
-    console.log(result);
 })();
