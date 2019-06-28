@@ -40,7 +40,8 @@ console.log(xml_file);
         try {
             // create a test folder if not exist
             if (test_name && !fs.existsSync(`./tmp/${test_name}`)) {
-                fs.mkdirSync(`./tmp/${test_name}`);
+                // after node 10.12.0 support create a directory recursively
+                fs.mkdirSync(`./tmp/${test_name}`, { recursive: true }); 
             }
             // write the files into test folder
             fs.writeFileSync(`./tmp/${test_name}/test.jmx`, file_to_dump);
