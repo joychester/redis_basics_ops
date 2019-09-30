@@ -5,8 +5,17 @@ const bluebird = require('bluebird');
 
 bluebird.promisifyAll(redis);
 
-//redis server running locally and use all default configs
-const client = redis.createClient();
+let client = ''; 
+
+try {
+  //redis server running locally and use all default configs
+  console.log("Trying to Connect to Redis server...");
+  client = redis.createClient();
+} catch (e) {
+  console.error(e);
+}
+
+console.log("Connected to target Redis server...");
 
 const quit = async function() {
   await client.quitAsync();
