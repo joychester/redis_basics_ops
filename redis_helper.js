@@ -2,15 +2,17 @@
 
 const redis = require('redis');
 const bluebird = require('bluebird');
+const config = require('config');
 
 bluebird.promisifyAll(redis);
 
 let client = ''; 
+const Redis_url = config.get('Redis.URL');
 
 try {
   //redis server running locally and use all default configs
   console.log("Trying to Connect to Redis server...");
-  client = redis.createClient();
+  client = redis.createClient({url: Redis_url});
 } catch (e) {
   console.error(e);
 }
