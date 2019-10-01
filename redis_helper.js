@@ -14,6 +14,7 @@ try {
   console.log("Trying to Connect to Redis server...");
   client = redis.createClient({url: Redis_url});
 } catch (e) {
+  console.log(`failed to connect to ${Redis_url}`);
   console.error(e);
 }
 
