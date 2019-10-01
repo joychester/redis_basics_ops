@@ -3,8 +3,9 @@ taste the redis nodejs client
 
 ### install lib depenency
 ```
-npm install redis 
+npm install redis (may be removed and change to another option)
 npm install bluebird
+npm install config
 ```
 
 ### start redis server in silent way
