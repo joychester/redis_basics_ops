@@ -74,7 +74,7 @@ function sleep(ms){
             }
           } else {
             console.log('bzt process not found, test agent is idle...');
-            agent_status = 0;
+            agent_status = "0";
             if (prev_agent_status !== agent_status) {
               // update the agent status to redis server
               await setFieldToHash(client, Agent_Hash_name, Worker, agent_status);
@@ -82,7 +82,7 @@ function sleep(ms){
           }
         } else {
           console.error('[CRITICAL]: RQ process not found, need to start it now...');
-          agent_status = -1;
+          agent_status = "-1";
           if (prev_agent_status !== agent_status) {
             // update the agent status to redis server
             await setFieldToHash(client, Agent_Hash_name, Worker, agent_status);
